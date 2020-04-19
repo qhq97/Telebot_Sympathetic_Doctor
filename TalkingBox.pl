@@ -7,11 +7,10 @@
 generate_question(X):- questions_mood_pain(L), random_member(X,L).
 generate_question_2(X):- questions_symptoms(L), random_member(X,L).
 
-generate_gesture():-
-    (   (mood(weepy); mood(stressed), mood(fear); pain(manageable_pain); pain(mild_pain)), calming_gesture(L); 
+generate_gesture(X):-
+    (   (mood(weepy); mood(stressed); mood(scared); pain(moderate_pain); pain(mild_pain)), calming_gesture(L); 
     (mood(angry); pain(unbearable_pain); pain(lot_of_pain)), polite_gesture(L);
-    (pain(no_pain); mood(calm)), normal_gesture(L)),
-    random_member(G, L).
+    normal_gesture(L)), random_member(X, L).
 
 ask_mood(X):-
     mood_library(L), not_askedList(L,R), member(X,R).
@@ -64,14 +63,14 @@ related(X,Y):-
 	food_poisoning(L),member(X,L),member(Y,L);
 	allergy(L),member(X,L),member(Y,L).
 
-pain(X).
-mood(X).
+pain(nothing).
+mood(nothing).
 pain_library([no_pain,  mild_pain, moderate_pain, lots_of_pain, unbearable_pain]).
-mood_library([calm, angry, weepy, stressed, fear]).
+mood_library([calm, angry, weepy, stressed, scared]).
 
 polite_gesture([look_concerned, mellow_voice, light_touch, faint_smile]).
 calming_gesture([look_composed, look_attentive, gentle_voice]).
-normal_gesture([broad_smile, beaming_voice]).
+normal_gesture([broad_smile, beaming_voice, nod_head]).
 
 fever([high_temperature, sweat, no_pain, weepy, fatigue]).
 cold([sneeze, cough, fatigue, calm, no_pain]).
@@ -79,9 +78,9 @@ injury([bleeding, new_wound, lots_of_pain, unbearable_pain, weepy]).
 food_poisoning([diarrhea, no_appetite, mild_pain, moderate_pain, high_temperature]).
 allergy([itch, red_spots, stressed, watery_eyes, no_pain]).
 
-symptoms(X).
-not_symptoms(X).
-asked(X).
+symptoms(nothing).
+not_symptoms(nothing).
+asked(nothing).
 
 questions_mood_pain(['Are you feeling ',
                   'Perhaps you are feeling ',
